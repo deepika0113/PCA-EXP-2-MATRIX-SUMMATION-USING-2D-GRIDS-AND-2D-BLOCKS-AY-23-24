@@ -1,9 +1,9 @@
 # PCA-EXP-2-Matrix-Summation-using-2D-Grids-and-2D-Blocks-AY-23-24
 
-<h3>DEEPIKA R</h3>
-<h3>212224100009</h3>
-<h3>EX. NO 2 </h3>
-<h3>15.05.2026</h3>
+## ENTER YOUR NAME : DEEPIKA R
+## ENTER YOUR REGISTER NO:212224100009
+## EX. NO:2
+## DATE: 22.05.2026
 <h1> <align=center> MATRIX SUMMATION WITH A 2D GRID AND 2D BLOCKS </h3>
 i.  Use the file sumMatrixOnGPU-2D-grid-2D-block.cu
 ii. Matrix summation with a 2D grid and 2D blocks. Adapt it to integer matrix addition. Find the best execution configuration. </h3>
@@ -34,10 +34,14 @@ Google Colab with NVCC Compiler
 12.	Reset the device: Reset the device using cudaDeviceReset to ensure that all resources are cleaned up before the program exits.
 
 ## PROGRAM:
-~~~
+```
 %%cuda
 #include <cuda_runtime.h>
 #include <stdio.h>
+#include <sys/time.h>
+
+
+
 #include <sys/time.h>
 
 #ifndef _COMMON_H
@@ -173,14 +177,16 @@ void checkResult(float *hostRef, float *gpuRef, const int N)
 
 __global__ void sumMatrixOnGPU2D(float *A, float *B, float *C, int NX, int NY)
 {
-    unsigned int ix = blockIdx.x * blockDim.x + threadIdx.x;
-    unsigned int iy = blockIdx.y * blockDim.y + threadIdx.y;
-    unsigned int idx = iy * NX + ix;
 
-    if (idx < NX * NY)
-    {
-        C[idx] = A[idx] + B[idx];
-    }
+     unsigned int ix = blockIdx.x * blockDim.x + threadIdx.x;
+     unsigned int iy = blockIdx.y * blockDim.y + threadIdx.y;
+     unsigned int idx = iy * NX + ix;
+
+     if (idx < NX * NY)
+     {
+         C[idx] = A[idx] + B[idx];
+     }
+
 
 
 
@@ -248,7 +254,7 @@ int main(int argc, char **argv)
 
 iStart = seconds();
 
-sumMatrixOnGPU2D<<<grid,block>>>(d_MatA, d_MatB, d_MatC, nx, ny);
+sumMatrixOnGPU2D<<<grid, block>>>(d_MatA, d_MatB, d_MatC, nx, ny);
 
 CHECK(cudaDeviceSynchronize());
 
@@ -290,11 +296,10 @@ CHECK(cudaDeviceSynchronize());
 
     return (0);
 }
-~~~
+```
 
 ## OUTPUT:
-<img width="1255" height="154" alt="Screenshot 2026-05-15 at 2 50 48 PM" src="https://github.com/user-attachments/assets/7e659336-b468-4a3b-9726-d8a207cb7411" />
-
+<img width="1500" height="207" alt="Screenshot 2026-05-22 140107" src="https://github.com/user-attachments/assets/eb098713-1721-4091-9183-aaf6dce77d3f" />
 
 ## RESULT:
 The host took _________ seconds to complete it’s computation, while the GPU outperforms the host and completes the computation in ________ seconds. Therefore, float variables in the GPU will result in the best possible result. Thus, matrix summation using 2D grids and 2D blocks has been performed successfully.
